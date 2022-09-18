@@ -6,11 +6,19 @@
       <%= render "devise/shared/error_messages", resource: resource %>
 
       <div class="mb-3">
+        <%= f.text_field :matric_number, autofocus: false, class: 'form-control', placeholder: "Matric Number" %>
+      </div>
+
+      <div class="mb-3">
         <%= f.text_field :name, autofocus: false, class: 'form-control', placeholder: "Full name" %>
       </div>
 
       <div class="mb-3">
         <%= f.email_field :email, class: 'form-control', placeholder: 'Email Address' %>
+      </div>
+
+      <div class="mb-3">
+        <%= f.text_field :level, autofocus: false, class: 'form-control', placeholder: "Level" %>
       </div>
 
       <div class="mb-3">

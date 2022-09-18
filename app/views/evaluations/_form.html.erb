@@ -1,0 +1,50 @@
+<%= form_with(model: evaluation) do |form| %>
+  <% if evaluation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(evaluation.errors.count, "error") %> prohibited this evaluation from being saved:</h2>
+
+      <ul>
+      <% evaluation.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= form.label :name, class: 'form-label' %>
+      <%= form.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div data-controller="nested-form">
+      <template data-nested-form-target='template'>
+        <%= form.fields_for :questions, Question.new, child_index: 'TEMPLATE_RECORD' do |question| %>
+          <%= render 'question_fields', form: question %>
+        <% end %>
+      </template>
+
+      <%= form.fields_for :questions do |question| %>
+        <%= render 'question_fields', form: question %>
+      <% end %>
+
+      <div data-nested-form-target="add_item">
+        <%= link_to "Add Question", "#", data: { action: "nested-form#add_association" } %>
+      </div>
+    </div>
+
+  <div class="mb-3">
+    <% if evaluation.persisted? %>
+      <div class="float-end">
+        <%= link_to 'Destroy', evaluation, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+      </div>
+    <% end %>
+
+    <%= form.submit class: 'btn btn-primary' %>
+
+    <% if evaluation.persisted? %>
+      <%= link_to "Cancel", evaluation, class: "btn btn-link" %>
+    <% else %>
+      <%= link_to "Cancel", evaluations_path, class: "btn btn-link" %>
+    <% end %>
+  </div>
+<% end %>
